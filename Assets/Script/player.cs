@@ -28,11 +28,23 @@ public class player : MonoBehaviour
         {
             Debug.LogError("'coinPrefab' is null.");
         }
+
+        // 클릭 이벤트를 받을 대상을 설정합니다.
+        gameObject.layer = LayerMask.NameToLayer("Clickable");
     }
 
     void Update()
     {
-        if (!isScaling && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)))
+        if (!isScaling && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(SpawnCoin());
+            StartCoroutine(ScaleDown());
+        }
+    }
+
+    void OnMouseDown()
+    {
+        if (!isScaling)
         {
             StartCoroutine(SpawnCoin());
             StartCoroutine(ScaleDown());
@@ -51,6 +63,7 @@ public class player : MonoBehaviour
 
         // 코인 생성
         GameObject spawnedCoin = Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+        Debug.Log("코인이 생성되었습니다.");
 
         if (coinRigidbody != null)
         {
