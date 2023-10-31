@@ -8,13 +8,17 @@ public class player : MonoBehaviour
     public float spawnRange = 2f;
     public float forceUp = 5f;
     public float coinLifetime = 10f;
+    public AudioClip coinSpawnSound;
 
     private Vector3 originalScale;
     private bool isScaling = false;
     private Rigidbody coinRigidbody;
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         originalScale = transform.localScale;
         if (coinPrefab != null)
         {
@@ -64,6 +68,11 @@ public class player : MonoBehaviour
         // 코인 생성
         GameObject spawnedCoin = Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
         Debug.Log("코인이 생성되었습니다.");
+
+        if (audioSource != null && coinSpawnSound != null)
+        {
+            audioSource.PlayOneShot(coinSpawnSound);
+        }
 
         if (coinRigidbody != null)
         {
