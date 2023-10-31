@@ -7,10 +7,23 @@ using System.IO;
 
 public enum SceneName
 {
+    TitleScene,
     MainScene,
-    GameScene,
+    GameScene
 }
 
+public enum Save_Date
+{
+    save_NickName,
+    save_SceneName,
+    save_Coin, // 효과음의 볼륨 크기를 저장.(옵션)
+    save_BGM, // 배경음의 볼륨 크기를 저장.
+    save_Level, // 플레이어 레벨
+    save_CPU_level,
+    save_Exp, // 경험치
+    save_Gold
+    
+}
 
 public class PlayerData
 {
