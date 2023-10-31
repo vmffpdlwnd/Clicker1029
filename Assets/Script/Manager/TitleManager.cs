@@ -44,7 +44,7 @@ public class TitleManager : MonoBehaviour
         }
         else // 계정 생성 로직
         {
-            //LeanTween.scale(nickNamePopup, Vector3.one, 0.7f).setEase(LeanTweenType.easeOutElastic);
+            nickNamePopup.transform.DOScale(1f, 0.7f).SetEase(Ease.OutElastic);
             welcomeText.enabled = false;
         }
     }
@@ -66,18 +66,18 @@ public class TitleManager : MonoBehaviour
     {
         if (newNickName.Length >= 2) // 두글자 이상, 금지어 처리, 중복닉네임 체크
         {
-            //LeanTween.scale(nickNamePopup, Vector3.zero, 0.7f).setEase(LeanTweenType.easeOutElastic); // 팝업창 제거
+            nickNamePopup.transform.DOScale(Vector3.zero, 0.7f).SetEase(Ease.OutElastic); // 팝업창 제거
             welcomeText.enabled = true;
             GameManager.Instance.CreateUserData(newNickName);
             GameManager.Instance.SaveData();
             InitTitleScene();
-
         }
         else
         {
             WarningTextActive(); // 다시입력하라는 경고 메세지 출력
         }
     }
+
 
     Color fromColor = Color.red;
     Color toColor = Color.red;
@@ -87,11 +87,12 @@ public class TitleManager : MonoBehaviour
         fromColor.a = 0f;
         toColor.a = 1f;
 
-        //LeanTween.value(warningText.gameObject, UpdateValue, fromColor, toColor, 1f).setEase(LeanTweenType.easeInOutQuad);
-        //LeanTween.value(warningText.gameObject, UpdateValue, toColor, fromColor, 1f).setDelay(1.5f).setEase(LeanTweenType.easeInOutQuad);
+        DOTween.To(() => fromColor, x => UpdateValue(x), toColor, 1f).SetEase(Ease.InOutQuad);
+        DOTween.To(() => toColor, x => UpdateValue(x), fromColor, 1f).SetDelay(1.5f).SetEase(Ease.InOutQuad);
     }
     private void UpdateValue(Color val)
     {
         warningText.color = val;
+        warningText.gameObject.SetActive(val.a > 0); // 투명도가 0보다 크면 경고 메시지 표시, 그렇지 않으면 숨김
     }
 }
