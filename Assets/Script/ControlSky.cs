@@ -39,7 +39,5 @@ public class ControlSky : MonoBehaviour
             directionalLight.transform.rotation = originalRotation;
         }
 
-        Debug.Log(currentTime);
-
     }
 }

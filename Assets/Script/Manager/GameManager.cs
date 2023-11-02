@@ -9,14 +9,14 @@ public enum SceneName
 {
     TitleScene,
     MainScene,
-    GameScene
+    GameScene1
 }
 
 public enum Save_Date
 {
     save_NickName,
     save_SceneName,
-    save_Coin, // 효과음의 볼륨 크기를 저장.(옵션)
+    save_Coin_BGM, // 코인의 볼륨 크기를 저장.(옵션)
     save_BGM, // 배경음의 볼륨 크기를 저장.
     save_Level, // 플레이어 레벨
     save_CPU_level,
@@ -141,10 +141,12 @@ public class GameManager : Singleton<GameManager>
         get => pData.CPU_level;
     }
 
+    public Text expText;
+
     public void AddExp(int addEXP)
     {
         pData.curExp += addEXP;
-        // todo : 레벨업 처리.
+        UIManager.Instance.UpdateUI();
     }
     public int PlayerGold
     {
@@ -152,10 +154,12 @@ public class GameManager : Singleton<GameManager>
         set => pData.gold = value;
     }
 
+    public Text goldText;
+
     public void AddGold(int addGold)
     {
         pData.gold += addGold;
-        // todo : 인벤토리, UI 갱신처리 추가.
+        UIManager.Instance.UpdateUI();
     }
 
     #endregion

@@ -18,6 +18,8 @@ public class TitleManager : MonoBehaviour
 
     private void Awake()
     {
+        nickNamePopup.SetActive(false); // 팝업을 비활성화
+        warningText.gameObject.SetActive(false); // warningText를 비활성화
         InitTitleScene();
     }
 
@@ -44,8 +46,12 @@ public class TitleManager : MonoBehaviour
         }
         else // 계정 생성 로직
         {
-            nickNamePopup.transform.DOScale(1f, 0.7f).SetEase(Ease.OutElastic);
-            welcomeText.enabled = false;
+            nickNamePopup.SetActive(true);
+            nickNamePopup.transform.localScale = Vector3.zero;
+            nickNamePopup.transform.DOScale(1.3f, 0.7f)
+                .SetEase(Ease.InOutElastic)
+                .OnComplete(() => nickNamePopup.transform.DOScale(1f, 0.3f));
+
         }
     }
 
@@ -66,10 +72,19 @@ public class TitleManager : MonoBehaviour
     {
         if (newNickName.Length >= 2) // 두글자 이상, 금지어 처리, 중복닉네임 체크
         {
-            nickNamePopup.transform.DOScale(Vector3.zero, 0.7f).SetEase(Ease.OutElastic); // 팝업창 제거
+            nickNamePopup.transform.DOScale(0.7f, 0.3f)
+            .OnComplete(() =>
+             {
+                 nickNamePopup.transform.DOScale(0f, 0.7f)
+                 .SetEase(Ease.InOutElastic)
+                 .OnComplete(() => nickNamePopup.SetActive(false));
+             }); // 팝업창 제거
+
             welcomeText.enabled = true;
+
             GameManager.Instance.CreateUserData(newNickName);
             GameManager.Instance.SaveData();
+
             InitTitleScene();
         }
         else
@@ -87,9 +102,11 @@ public class TitleManager : MonoBehaviour
         fromColor.a = 0f;
         toColor.a = 1f;
 
-        DOTween.To(() => fromColor, x => UpdateValue(x), toColor, 1f).SetEase(Ease.InOutQuad);
-        DOTween.To(() => toColor, x => UpdateValue(x), fromColor, 1f).SetDelay(1.5f).SetEase(Ease.InOutQuad);
+        warningText.gameObject.SetActive(true); // warningText를 활성화
+        DOTween.To(() => fromColor, x => UpdateValue(x), toColor, 1f).SetEase(Ease.InOutQuad).OnStart(() => warningText.gameObject.SetActive(true));
+        DOTween.To(() => toColor, x => UpdateValue(x), fromColor, 1f).SetDelay(1.5f).SetEase(Ease.InOutQuad).OnComplete(() => warningText.gameObject.SetActive(false));
     }
+
     private void UpdateValue(Color val)
     {
         warningText.color = val;

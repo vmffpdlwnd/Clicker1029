@@ -67,7 +67,6 @@ public class player : MonoBehaviour
 
         // 코인 생성
         GameObject spawnedCoin = Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
-        Debug.Log("코인이 생성되었습니다.");
 
         if (audioSource != null && coinSpawnSound != null)
         {
@@ -80,7 +79,7 @@ public class player : MonoBehaviour
             coinRigidbody.AddForce(Vector3.up * forceUp, ForceMode.Impulse);
         }
 
-        yield return new WaitForSeconds(coinLifetime);
+        yield return YieldInstructionCache.WaitForSeconds(coinLifetime);
     }
 
     IEnumerator ScaleDown()
