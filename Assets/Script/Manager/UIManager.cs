@@ -53,14 +53,7 @@ public class UIManager : Singleton<UIManager>
         // 예시로 간단하게 레벨 * 100으로 계산
         return level * 100;
     }
-    public void IncreaseGoldOnClick()
-    {
-        if(Input.GetMouseButton(0))
-        Debug.Log("클릭됨");
-        // 버튼을 클릭할 때마다 골드를 10 증가시킵니다.
-        GameManager.Instance.PlayerGold += 10;
-        UpdateUI();
-    }
+ 
     // 버튼 클릭 이벤트 처리
     public void OnButtonHome()
     {

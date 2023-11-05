@@ -1102,6 +1102,7 @@ GameObject:
   - component: {fileID: 416157234}
   - component: {fileID: 416157237}
   - component: {fileID: 416157236}
+  - component: {fileID: 416157238}
   - component: {fileID: 416157235}
   m_Layer: 5
   m_Name: Home
@@ -1177,7 +1178,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1760237234}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: IncreaseGoldOnClick
+        m_MethodName: OnButtonHome
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1225,6 +1226,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416157233}
   m_CullTransparentMesh: 1
+--- !u!65 &416157238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 416157233}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &418544503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1329,7 +1343,7 @@ Transform:
   - {fileID: 1267186175}
   - {fileID: 2055688733}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &496136559
 PrefabInstance:
@@ -1639,6 +1653,7 @@ GameObject:
   - component: {fileID: 580394117}
   - component: {fileID: 580394116}
   - component: {fileID: 580394115}
+  - component: {fileID: 580394118}
   m_Layer: 5
   m_Name: Set
   m_TagString: Untagged
@@ -1761,6 +1776,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580394113}
   m_CullTransparentMesh: 1
+--- !u!65 &580394118
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580394113}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &712436946
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1821,8 +1849,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7876858403529247324, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876858403529247324, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
+      propertyPath: m_Size.y
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876858403529247324, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876858403529247324, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876858403529247324, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
+      propertyPath: m_Center.y
+      value: 2.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a3ed5c4ef2ccb046845bd2d4dbc4210, type: 3}
@@ -2455,7 +2499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26.0663, y: 5.5856}
+  m_AnchoredPosition: {x: 26.066284, y: 5.5856}
   m_SizeDelta: {x: 385.1049, y: 1136.6963}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1054482145
@@ -2603,7 +2647,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1082407798
 AudioSource:
@@ -3283,7 +3327,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395215743
 GameObject:
@@ -3467,6 +3511,7 @@ GameObject:
   - component: {fileID: 1570544347}
   - component: {fileID: 1570544346}
   - component: {fileID: 1570544345}
+  - component: {fileID: 1570544348}
   m_Layer: 5
   m_Name: Game
   m_TagString: Untagged
@@ -3589,6 +3634,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1570544343}
   m_CullTransparentMesh: 1
+--- !u!65 &1570544348
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570544343}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1578182337
 GameObject:
   m_ObjectHideFlags: 0
@@ -4047,7 +4105,7 @@ Transform:
   - {fileID: 1151423121}
   - {fileID: 109827476}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1718957312
 GameObject:
@@ -4183,7 +4241,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1760237229}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -4593,6 +4651,7 @@ GameObject:
   - component: {fileID: 1880101769}
   - component: {fileID: 1880101768}
   - component: {fileID: 1880101767}
+  - component: {fileID: 1880101770}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -4715,6 +4774,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880101765}
   m_CullTransparentMesh: 1
+--- !u!65 &1880101770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880101765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1916207045
 GameObject:
   m_ObjectHideFlags: 0
