@@ -11,7 +11,23 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Image expBar;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI goldText;
-    [SerializeField] private Button[] buttons;
+    [SerializeField]
+    private Button home;
+    [SerializeField]
+    private Button Shop;
+    [SerializeField]
+    private Button Gaming;
+    [SerializeField]
+    private Button Setting;
+    [SerializeField] private GameObject shopPopup;
+
+    private void Awake()
+    {
+        home.onClick.AddListener(OnButtonHome);
+        Shop.onClick.AddListener(OnButtonShop);
+        Gaming.onClick.AddListener(OnButtonGame);
+        Setting.onClick.AddListener(OnButtonSetting);
+    }
 
     private void Start()
     {
@@ -45,31 +61,35 @@ public class UIManager : Singleton<UIManager>
         // 예시로 간단하게 레벨 * 100으로 계산
         return level * 100;
     }
-    public void IncreaseGoldOnClick()
-    {
-        Debug.Log("클릭됨");
-        // 버튼을 클릭할 때마다 골드를 10 증가시킵니다.
-        GameManager.Instance.PlayerGold += 10;
-        UpdateUI();
-    }
+
     // 버튼 클릭 이벤트 처리
-    public void OnButton1Click()
+    public void OnButtonHome()
     {
-        // 버튼 1의 동작 처리
+        Debug.Log("버튼이 클릭되었습니다.");
+        GameManager.Instance.AsyncLoadNextScene(SceneName.MainScene);
     }
 
-    public void OnButton2Click()
+    public void OnButtonShop()
     {
-        // 버튼 2의 동작 처리
+        Debug.Log("버튼이 클릭되었습니다.");
+        // MidPopup과 ShopPopup 활성화
+        shopPopup.SetActive(true);
+
+        // MidPopup 애니메이션 적용
+        RectTransform shopPopupRect = shopPopup.GetComponent<RectTransform>();
+        shopPopupRect.DOAnchorPosY(200f, 1f).SetEase(Ease.OutElastic);
     }
 
-    public void OnButton3Click()
+
+    public void OnButtonGame()
     {
+        Debug.Log("버튼이 클릭되었습니다.");
         // 버튼 3의 동작 처리
     }
 
-    public void OnButton4Click()
+    public void OnButtonSetting()
     {
+        Debug.Log("버튼이 클릭되었습니다.");
         // 버튼 4의 동작 처리
     }
 }

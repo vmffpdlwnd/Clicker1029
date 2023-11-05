@@ -44,14 +44,18 @@ public class player : MonoBehaviour
             StartCoroutine(SpawnCoin());
             StartCoroutine(ScaleDown());
         }
-    }
-
-    void OnMouseDown()
-    {
-        if (!isScaling)
+        if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(SpawnCoin());
-            StartCoroutine(ScaleDown());
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform == this.transform)
+                {
+                    StartCoroutine(SpawnCoin());
+                    StartCoroutine(ScaleDown());
+                }
+            }
         }
     }
 

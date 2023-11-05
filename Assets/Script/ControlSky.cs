@@ -19,9 +19,8 @@ public class ControlSky : MonoBehaviour
     private void Update()
     {
         float currentTime = Time.time;
-        float rotation = currentTime * 1f % 120f; // rotation is always between 0 and 360.
+        float rotation = currentTime * 1f % 120f; // rotation is always between 0 and 120.
         UnityEngine.RenderSettings.skybox.SetFloat("_Rotation", rotation);
-
         
 
         if (rotation <= 60f)

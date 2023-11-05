@@ -3,7 +3,9 @@ guid: e939d89b5c00c5d48b9508aa828af245
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - coinPrefab: {instanceID: 0}
+  - coinSpawnSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

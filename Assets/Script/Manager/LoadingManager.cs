@@ -15,10 +15,11 @@ public class LoadingManager : MonoBehaviour
     private void Awake()
     {
         loadingBar.fillAmount = 0f;
-        loadingBar_back.DOFade(0, 0); // �ε��ٸ� ���� ����ϴ�.
-        logo.rectTransform.anchoredPosition = Vector2.zero; // �ΰ��� ȭ�� �߾ӿ� ��ġ��ŵ�ϴ�.
-        StartCoroutine("LoadAsyncScene"); // �񵿱� �ε� ó���ϴ� �ڷ�ƾ ����
+        loadingBar_back.DOFade(0, 0);
+        logo.rectTransform.anchoredPosition = Vector2.zero;
+        StartCoroutine("LoadAsyncScene");
     }
+
 
     IEnumerator LoadAsyncScene()
     {

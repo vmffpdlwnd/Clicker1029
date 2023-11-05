@@ -36,6 +36,8 @@ public class PlayerData
 
 public class GameManager : Singleton<GameManager>
 {
+    float rotation;
+
     private PlayerData pData = new PlayerData();
     public PlayerData PlayerInfo
     {
@@ -48,9 +50,11 @@ public class GameManager : Singleton<GameManager>
         get => nextScene;
     }
 
-    private new void Awake()
+    private void Awake()
     {
-        base.Awake(); // 부모의 Awake 호출
+        rotation = Time.time + 120f;
+
+        Singleton<GameManager>.Initialize();
         dataPath = Application.persistentDataPath + "/save";
         CheckData();
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
@@ -80,6 +84,23 @@ public class GameManager : Singleton<GameManager>
     #region _Save&Load_
 
     private string dataPath; //= Application.persistentDataPath + "/save"; // 디바이스 정해진 폴더에 save폴더 추가
+
+    void Update()
+    {
+        if (Time.time >= rotation)
+        {
+            AutoSave();
+            rotation = Mathf.Ceil(Time.time) + 120f; // 다음 저장 시간을 현재 시간에서 120초 뒤로 재설정
+        }
+    }
+
+    void AutoSave()
+    {
+        Debug.Log("Game Saved!");
+        // 실제 게임 저장 로직을 여기에 구현하십시오.
+        string data = JsonUtility.ToJson(pData); // 객체정보를 string타입으로 변경 ( Json 구조를 활용 )
+        File.WriteAllText(dataPath, data);
+    }
 
     public void SaveData()
     {
@@ -138,9 +159,14 @@ public class GameManager : Singleton<GameManager>
         get => pData.curExp;
         set => pData.curExp = value;
     }
-    public int PlayerCurrentCPU_level
+    public int PlayerCPU_Level
     {
         get => pData.CPU_level;
+    }
+    public int PlayerGold
+    {
+        get => pData.gold;
+        set => pData.gold = value;
     }
 
     public Text expText;
@@ -149,11 +175,6 @@ public class GameManager : Singleton<GameManager>
     {
         pData.curExp += addEXP;
         UIManager.Instance.UpdateUI();
-    }
-    public int PlayerGold
-    {
-        get => pData.gold;
-        set => pData.gold = value;
     }
 
     public Text goldText;
