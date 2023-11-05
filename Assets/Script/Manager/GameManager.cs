@@ -131,10 +131,12 @@ public class GameManager : Singleton<GameManager>
     public int PlayerLevel
     {
         get => pData.level;
+        set => pData.level = value;
     }
     public int PlayerCurrentExp
     {
         get => pData.curExp;
+        set => pData.curExp = value;
     }
     public int PlayerCurrentCPU_level
     {
@@ -158,7 +160,7 @@ public class GameManager : Singleton<GameManager>
 
     public void AddGold(int addGold)
     {
-        pData.gold += addGold;
+        pData.gold += addGold * pData.level;
         UIManager.Instance.UpdateUI();
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -24,13 +26,22 @@ public class UIManager : Singleton<UIManager>
         float fillAmount = (float)currentExp / maxExp;
         expBar.fillAmount = fillAmount;
 
+        if (currentExp >= maxExp)
+        {
+            GameManager.Instance.PlayerLevel++;
+            GameManager.Instance.PlayerCurrentExp -= maxExp;
+            // 경험치가 넘치면 즉시 경험치 바를 리셋
+            expBar.fillAmount = 0;
+        }
+
+        DOTween.To(() => expBar.fillAmount, x => expBar.fillAmount = x, expBar.fillAmount, 0.5f);
+
         levelText.text =  GameManager.Instance.PlayerLevel.ToString();
         goldText.text = "X " + GameManager.Instance.PlayerGold.ToString();
     }
 
     private int CalculateMaxExpForLevel(int level)
     {
-        // 레벨에 따른 최대 경험치 계산 로직을 구현
         // 예시로 간단하게 레벨 * 100으로 계산
         return level * 100;
     }
