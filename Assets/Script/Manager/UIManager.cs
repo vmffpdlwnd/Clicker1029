@@ -11,11 +11,19 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Image expBar;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI goldText;
-    [SerializeField] private Button[] buttons;
+    [SerializeField] private Button home;
+    [SerializeField] private Button shop;
+    [SerializeField] private Button game;
+    [SerializeField] private Button set;
 
     private void Start()
     {
         UpdateUI();
+        home.onClick.AddListener(OnButtonHome);
+        shop.onClick.AddListener(OnButtonShop);
+        game.onClick.AddListener(OnButtonGame);
+        set.onClick.AddListener(OnButtonSetting);
+        
     }
 
     public void UpdateUI()
@@ -47,29 +55,34 @@ public class UIManager : Singleton<UIManager>
     }
     public void IncreaseGoldOnClick()
     {
+        if(Input.GetMouseButton(0))
         Debug.Log("클릭됨");
         // 버튼을 클릭할 때마다 골드를 10 증가시킵니다.
         GameManager.Instance.PlayerGold += 10;
         UpdateUI();
     }
     // 버튼 클릭 이벤트 처리
-    public void OnButton1Click()
+    public void OnButtonHome()
     {
+        Debug.Log("클릭됨");
         // 버튼 1의 동작 처리
     }
 
-    public void OnButton2Click()
+    public void OnButtonShop()
     {
+        Debug.Log("클릭됨");
         // 버튼 2의 동작 처리
     }
 
-    public void OnButton3Click()
+    public void OnButtonGame()
     {
+        Debug.Log("클릭됨");
         // 버튼 3의 동작 처리
     }
 
-    public void OnButton4Click()
+    public void OnButtonSetting()
     {
+        Debug.Log("클릭됨");
         // 버튼 4의 동작 처리
     }
 }

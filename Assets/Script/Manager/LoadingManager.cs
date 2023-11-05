@@ -25,7 +25,6 @@ public class LoadingManager : MonoBehaviour
         yield return logo.rectTransform.DOAnchorPos(new Vector2(-360, 41), 1.5f).WaitForCompletion(); // �ΰ��� ������ ��ġ�� 1.5�� ���� �̵���ŵ�ϴ�.
 
         yield return loadingBar_back.DOFade(1, 0.5f).WaitForCompletion(); // loadingBar_back�� 0.5�� ���� ������ ��Ÿ���� �մϴ�.
-        yield return YieldInstructionCache.WaitForSeconds(0.5f);
 
         yield return loadingBar.DOFade(1, 0.5f).WaitForCompletion(); // loadingBar�� 0.5�� ���� ������ ��Ÿ���� �մϴ�.
         yield return YieldInstructionCache.WaitForSeconds(1f); // ����ũ �ε� 1��
