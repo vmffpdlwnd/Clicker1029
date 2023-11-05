@@ -39,22 +39,15 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        if (!isScaling && Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(SpawnCoin());
-            StartCoroutine(ScaleDown());
-        }
-        if (Input.GetMouseButtonDown(0))
+        if (!isScaling && Input.GetKeyDown(KeyCode.Space) | Input.GetMouseButtonDown(0) && gameObject.layer == LayerMask.NameToLayer("Clickable"))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+
+            if (Physics.Raycast(ray, out hit) && hit.collider.gameObject == gameObject)
             {
-                if (hit.transform == this.transform)
-                {
-                    StartCoroutine(SpawnCoin());
-                    StartCoroutine(ScaleDown());
-                }
+                StartCoroutine(SpawnCoin());
+                StartCoroutine(ScaleDown());
             }
         }
     }

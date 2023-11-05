@@ -186,4 +186,21 @@ public class GameManager : Singleton<GameManager>
     }
 
     #endregion
+
+    #region _AutoSave_
+
+    private float autoSaveInterval = 60f; // 자동 저장 간격 (초 단위)
+    private float lastSaveTime = 0f; // 마지막 저장 시간
+
+    private void Update()
+    {
+        if (Time.time - lastSaveTime >= autoSaveInterval)
+        {
+            Debug.Log("Save Data!");
+            SaveData();
+            lastSaveTime = Time.time;
+        }
+    }
+
+    #endregion
 }
