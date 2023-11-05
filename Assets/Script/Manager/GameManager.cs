@@ -50,11 +50,9 @@ public class GameManager : Singleton<GameManager>
         get => nextScene;
     }
 
-    private void Awake()
+    private new void Awake()
     {
-        rotation = Time.time + 120f;
-
-        Singleton<GameManager>.Initialize();
+        base.Awake(); // 부모의 Awake 호출
         dataPath = Application.persistentDataPath + "/save";
         CheckData();
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
@@ -88,9 +86,9 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         if (Time.time >= rotation)
-        {
+        {           
+            rotation = Mathf.Ceil(Time.time) + 60f; // 다음 저장 시간을 현재 시간에서 60초 뒤로 재설정
             AutoSave();
-            rotation = Mathf.Ceil(Time.time) + 120f; // 다음 저장 시간을 현재 시간에서 120초 뒤로 재설정
         }
     }
 
@@ -159,14 +157,9 @@ public class GameManager : Singleton<GameManager>
         get => pData.curExp;
         set => pData.curExp = value;
     }
-    public int PlayerCPU_Level
+    public int PlayerCurrentCPU_level
     {
         get => pData.CPU_level;
-    }
-    public int PlayerGold
-    {
-        get => pData.gold;
-        set => pData.gold = value;
     }
 
     public Text expText;
@@ -176,6 +169,11 @@ public class GameManager : Singleton<GameManager>
         pData.curExp += addEXP;
         UIManager.Instance.UpdateUI();
     }
+    public int PlayerGold
+    {
+        get => pData.gold;
+        set => pData.gold = value;
+    }
 
     public Text goldText;
 
@@ -183,23 +181,6 @@ public class GameManager : Singleton<GameManager>
     {
         pData.gold += addGold * pData.level;
         UIManager.Instance.UpdateUI();
-    }
-
-    #endregion
-
-    #region _AutoSave_
-
-    private float autoSaveInterval = 60f; // 자동 저장 간격 (초 단위)
-    private float lastSaveTime = 0f; // 마지막 저장 시간
-
-    private void Update()
-    {
-        if (Time.time - lastSaveTime >= autoSaveInterval)
-        {
-            Debug.Log("Save Data!");
-            SaveData();
-            lastSaveTime = Time.time;
-        }
     }
 
     #endregion
