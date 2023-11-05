@@ -59,6 +59,7 @@ public class TitleManager : MonoBehaviour
     public void DeletBtn()
     {
         GameManager.Instance.DeleteData();
+        GameManager.Instance.PlayerGold = 0; // 코인 데이터 초기화
         InitTitleScene();
     }
 

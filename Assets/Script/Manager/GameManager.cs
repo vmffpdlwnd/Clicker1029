@@ -114,6 +114,7 @@ public class GameManager : Singleton<GameManager>
 
     public void DeleteData()
     {
+        pData.gold = 0; // 코인 데이터 초기화
         File.Delete(dataPath);
     }
     public bool CheckData()

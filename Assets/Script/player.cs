@@ -57,13 +57,12 @@ public class player : MonoBehaviour
         // Player 앞에 랜덤한 위치 설정
         Vector3 spawnPoint = transform.position + transform.right * Random.Range(-spawnRange, spawnRange) + transform.up * Random.Range(-spawnRange / 2, spawnRange / 2);
 
-        // z 좌표를 -6으로 설정
         spawnPoint.z = -6.2f;
 
         spawnPoint.y = Mathf.Max(spawnPoint.y, 2f); // y 좌표가 2 이상이 되도록 설정
 
         // 코인 생성
-        GameObject spawnedCoin = Instantiate(coinPrefab, spawnPoint, Quaternion.identity);
+        GameObject spawnedCoin = Instantiate(coinPrefab, spawnPoint-new Vector3(0.25f,0,0), Quaternion.identity);
 
         if (audioSource != null && coinSpawnSound != null)
         {
