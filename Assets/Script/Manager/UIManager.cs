@@ -15,15 +15,25 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button game;
     [SerializeField] private Button set;
 
-    [SerializeField] private GameObject shopPopup;
-
-    private Vector3 shopPopupOriginalPosition; // StatePopup의 원래 위치
-    private bool isshopPopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
-
     [SerializeField] private GameObject statePopup; // StatePopup 객체
 
     private Vector3 statePopupOriginalPosition; // StatePopup의 원래 위치
     private bool isStatePopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
+
+    [SerializeField] private GameObject shopPopup;
+
+    private Vector3 shopPopupOriginalPosition; // StatePopup의 원래 위치
+    private bool isShopPopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
+
+    [SerializeField] private GameObject gamePopup;
+
+    private Vector3 gamePopupOriginalPosition; // StatePopup의 원래 위치
+    private bool isGamePopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
+
+    [SerializeField] private GameObject settingPopup;
+
+    private Vector3 settingPopupOriginalPosition; // StatePopup의 원래 위치
+    private bool isSettingPopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
 
 
     private void Start()
@@ -37,8 +47,10 @@ public class UIManager : Singleton<UIManager>
         statePopupOriginalPosition = statePopup.transform.localPosition;
 
         game.onClick.AddListener(OnButtonGame);
-        set.onClick.AddListener(OnButtonSetting);
+        gamePopupOriginalPosition = gamePopup.transform.localPosition;
 
+        set.onClick.AddListener(OnButtonSetting);
+        settingPopupOriginalPosition = settingPopup.transform.localPosition;
 
     }
 
@@ -73,12 +85,10 @@ public class UIManager : Singleton<UIManager>
     // 버튼 클릭 이벤트 처리
     public void OnButtonState()
     {
-        Debug.Log("클릭됨");
-
         if (!isStatePopupActive)
         {
             // StatePopup UI를 원하는 위치로 이동
-            statePopup.transform.DOLocalMove(new Vector3(0, 78, 0), 1f).SetEase(Ease.InOutElastic);
+            statePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic);
             isStatePopupActive = true;
         }
         else
@@ -88,35 +98,48 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
-    private bool isPopupActive = false; // ShopPopup이 활성화되어 있는지 확인하는 변수
-    private Vector3 popupOriginalPosition = new Vector3(0f, -1200f, 0f); // ShopPopup의 원래 위치
-
     public void OnButtonShop()
     {
-        Debug.Log("클릭됨");
-
-        if (!isPopupActive)
+        if (!isShopPopupActive)
         {
             // ShopPopup UI를 원하는 위치로 이동
-            shopPopup.transform.DOLocalMove(new Vector3(0, 0, shopPopup.transform.localPosition.z), 0.5f).SetEase(Ease.InOutElastic);
-            isPopupActive = true;
+            shopPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic);
+            isShopPopupActive = true;
         }
         else
         {
             // ShopPopup을 원래 위치로 이동
-            shopPopup.transform.DOLocalMove(popupOriginalPosition, 0.5f).SetEase(Ease.InOutElastic).OnComplete(() => isPopupActive = false);
+            shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isShopPopupActive = false);
         }
     }
 
     public void OnButtonGame()
     {
-        Debug.Log("클릭됨");
-        // 버튼 3의 동작 처리
+        if (!isGamePopupActive)
+        {
+            // GamePopup UI를 원하는 위치로 이동
+            gamePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic);
+            isGamePopupActive = true;
+        }
+        else
+        {
+            // GamePopup을 원래 위치로 이동
+            gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isGamePopupActive = false);
+        }
     }
 
     public void OnButtonSetting()
     {
-        Debug.Log("클릭됨");
-        // 버튼 4의 동작 처리
+        if (!isSettingPopupActive)
+        {
+            // SettingPopup UI를 원하는 위치로 이동
+            settingPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic);
+            isSettingPopupActive = true;
+        }
+        else
+        {
+            // SettingPopup을 원래 위치로 이동
+            settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isSettingPopupActive = false);
+        }
     }
 }

@@ -86,9 +86,9 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         if (Time.time >= rotation)
-        {
-            AutoSave();
+        {           
             rotation = Mathf.Ceil(Time.time) + 60f; // 다음 저장 시간을 현재 시간에서 60초 뒤로 재설정
+            AutoSave();
         }
     }
 
