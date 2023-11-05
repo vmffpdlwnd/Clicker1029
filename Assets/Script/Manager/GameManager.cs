@@ -82,22 +82,17 @@ public class GameManager : Singleton<GameManager>
     #region _Save&Load_
 
     private string dataPath; //= Application.persistentDataPath + "/save"; // 디바이스 정해진 폴더에 save폴더 추가
+    private float autoSaveInterval = 60f; // 자동 저장 간격 (초 단위)
+    private float lastSaveTime = 0f; // 마지막 저장 시간
 
-    void Update()
+    private void Update()
     {
-        if (Time.time >= rotation)
-        {           
-            rotation = Mathf.Ceil(Time.time) + 60f; // 다음 저장 시간을 현재 시간에서 60초 뒤로 재설정
-            AutoSave();
+        if (Time.time - lastSaveTime >= autoSaveInterval)
+        {
+            Debug.Log("Save Data!");
+            SaveData();
+            lastSaveTime = Time.time;
         }
-    }
-
-    void AutoSave()
-    {
-        Debug.Log("Game Saved!");
-        // 실제 게임 저장 로직을 여기에 구현하십시오.
-        string data = JsonUtility.ToJson(pData); // 객체정보를 string타입으로 변경 ( Json 구조를 활용 )
-        File.WriteAllText(dataPath, data);
     }
 
     public void SaveData()
