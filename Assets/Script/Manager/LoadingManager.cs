@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI; // Image ����
 using UnityEngine.SceneManagement; // �� �ε�
 using DG.Tweening;
-using TMPro;
 
 public class LoadingManager : MonoBehaviour
 {
