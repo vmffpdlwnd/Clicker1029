@@ -85,61 +85,121 @@ public class UIManager : Singleton<UIManager>
     // 버튼 클릭 이벤트 처리
     public void OnButtonState()
     {
+        CloseAllOtherPopups("state");
+
         if (!isStatePopupActive)
         {
             // StatePopup UI를 원하는 위치로 이동
-            statePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic);
+            statePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isStatePopupActive = true;
+
+            // 게임 시간 멈추기
+            Time.timeScale = 0;
         }
         else
         {
             // StatePopup을 원래 위치로 이동
-            statePopup.transform.DOLocalMove(statePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isStatePopupActive = false);
+            statePopup.transform.DOLocalMove(statePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
+            {
+                isStatePopupActive = false;
+
+                // 게임 시간 재개
+                Time.timeScale = 1;
+            });
         }
     }
 
     public void OnButtonShop()
     {
+        CloseAllOtherPopups("shop");
         if (!isShopPopupActive)
         {
             // ShopPopup UI를 원하는 위치로 이동
-            shopPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic);
+            shopPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isShopPopupActive = true;
+
+            // 게임 시간 멈추기
+            Time.timeScale = 0;
         }
         else
         {
             // ShopPopup을 원래 위치로 이동
-            shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isShopPopupActive = false);
+            shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
+            {
+                isShopPopupActive = false;
+
+                // 게임 시간 재개
+                Time.timeScale = 0;
+            });
         }
     }
 
     public void OnButtonGame()
     {
+        CloseAllOtherPopups("game");
         if (!isGamePopupActive)
         {
             // GamePopup UI를 원하는 위치로 이동
-            gamePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic);
+            gamePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isGamePopupActive = true;
+
+            // 게임 시간 멈추기
+            Time.timeScale = 0;
         }
         else
         {
             // GamePopup을 원래 위치로 이동
-            gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isGamePopupActive = false);
+            gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
+            {     
+                isGamePopupActive = false;
+
+                // 게임 시간 재개
+                Time.timeScale = 1;
+            });
         }
     }
 
     public void OnButtonSetting()
     {
+        CloseAllOtherPopups("setting");
         if (!isSettingPopupActive)
         {
             // SettingPopup UI를 원하는 위치로 이동
-            settingPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic);
+            settingPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isSettingPopupActive = true;
+
+            // 게임 시간 멈추기
+            Time.timeScale = 0;
         }
         else
         {
             // SettingPopup을 원래 위치로 이동
-            settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).OnComplete(() => isSettingPopupActive = false);
+            settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
+            { 
+                isSettingPopupActive = false;
+
+                // 게임 시간 재개
+                Time.timeScale = 1;
+            });
+    }
+    }
+    private void CloseAllOtherPopups(string currentPopup)
+    {
+        if (currentPopup != "state" && isStatePopupActive)
+        {
+            statePopup.transform.DOLocalMove(statePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isStatePopupActive = false);
+        }
+        if (currentPopup != "shop" && isShopPopupActive)
+        {
+            shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isShopPopupActive = false);
+        }
+        if (currentPopup != "game" && isGamePopupActive)
+        {
+            gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isGamePopupActive = false);
+        }
+        if (currentPopup != "setting" && isSettingPopupActive)
+        {
+            settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isSettingPopupActive = false);
         }
     }
 }
