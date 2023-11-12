@@ -94,11 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4369e073492b24094ab5ecdd8aaaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  itemNameText: {fileID: 0}
-  itemPriceText: {fileID: 0}
-  sellCountText: {fileID: 0}
-  Btn: {fileID: 0}
+  icon: {fileID: 833409555755283153}
+  itemNameText: {fileID: 5204647436871598505}
+  itemPriceText: {fileID: 8276664652509772029}
+  purchaseButton: {fileID: 570312134690106236}
 --- !u!1 &1319552763389546431
 GameObject:
   m_ObjectHideFlags: 0

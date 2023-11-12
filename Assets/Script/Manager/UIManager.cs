@@ -35,6 +35,10 @@ public class UIManager : Singleton<UIManager>
     private Vector3 settingPopupOriginalPosition; // StatePopup의 원래 위치
     private bool isSettingPopupActive = false; // StatePopup이 활성화되어 있는지 확인하는 변수
 
+    //statePopup
+    [SerializeField] private TextMeshProUGUI levelText_state;
+    [SerializeField] private TextMeshProUGUI exp_state;
+    [SerializeField] private TextMeshProUGUI goldText_state;
 
     private void Start()
     {
@@ -74,6 +78,13 @@ public class UIManager : Singleton<UIManager>
 
         levelText.text =  GameManager.Instance.PlayerLevel.ToString();
         goldText.text = "X " + GameManager.Instance.PlayerGold.ToString();
+
+        levelText_state.text = GameManager.Instance.PlayerLevel.ToString();
+
+        int cExp = Mathf.RoundToInt((float)currentExp / maxExp * 100); // 경험치의 백분율 계산
+        exp_state.text = cExp.ToString() + "%"; // 텍스트 업데이트
+
+        goldText_state.text = "X " + GameManager.Instance.PlayerGold.ToString();
     }
 
     private int CalculateMaxExpForLevel(int level)

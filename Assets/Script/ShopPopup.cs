@@ -7,6 +7,9 @@ using UnityEngine.UI;
 public class ShopPopup : MonoBehaviour
 {
     [SerializeField]
+    private ShopList shopList;
+
+    [SerializeField]
     private Button CPUBtn;
     [SerializeField]
     private Button GPUBtn;
@@ -15,7 +18,8 @@ public class ShopPopup : MonoBehaviour
     [SerializeField]
     private Button SKILLBtn;
 
-    private ShopSlot shopSlot;
+    [SerializeField]
+    private ShopSlot shopSlotPrefab;
 
     List<ShopSlot> CPUSlotList = new List<ShopSlot>();
     List<ShopSlot> GPUSlotList = new List<ShopSlot>();
@@ -33,14 +37,28 @@ public class ShopPopup : MonoBehaviour
 
     private void Awake()
     {
-        InitPopup();
+        if (shopList == null)
+        {
+            Debug.LogError("ShopList 컴포넌트를 찾을 수 없습니다.");
+        }
+        else
+        {
+            StartCoroutine(InitPopup());
+        }
     }
 
-    private void InitPopup()
+    private IEnumerator InitPopup()
     {
-        
-    }
+        yield return new WaitForSeconds(0.1f);
 
+        ShopList.ShopCategory category = ShopList.ShopCategory.CPU;
+        var shopItems = shopList.GetShopItems(category);
+        foreach (var item in shopItems)
+        {
+            Debug.Log("아이템 이름: " + item.ItemName);
+            Debug.Log("아이템 가격: " + item.ItemPrice);
+        }
+    }
     private void Start()
     {
         // 버튼의 클릭 이벤트에 핸들러를 추가
@@ -99,29 +117,64 @@ public class ShopPopup : MonoBehaviour
 
     }
 
-    private void RefreshData()
+    // 팝업에 있는 거래금액을 갱신해주는 함수
+    public void RefreshGold()
     {
-        
+        CalculateGold();
     }
 
-
-    private void OnButtonSkill()
+    private void RefreshData(ShopList.ShopCategory category, List<ShopSlot> slotList)
     {
-        
-    }
 
-    private void OnButtonDeco()
-    {
-        
-    }
+        var items = shopList.GetShopItems(category);
 
-    private void OnButtonGpu()
-    {
-        
+        for (int i = 0; i < slotList.Count; i++)
+        {
+            if (i < items.Count)
+            {
+                slotList[i].RefrshSlot(i);
+            }
+            else
+            {
+                slotList[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnButtonCpu()
     {
-        
+        CPUPage.SetActive(true);
+        GPUPage.SetActive(false);
+        DECOPage.SetActive(false);
+        SKILLPage.SetActive(false);
+
+        RefreshData(ShopList.ShopCategory.CPU, CPUSlotList);
+    }
+    private void OnButtonGpu()
+    {
+        CPUPage.SetActive(false);
+        GPUPage.SetActive(true);
+        DECOPage.SetActive(false);
+        SKILLPage.SetActive(false);
+
+        RefreshData(ShopList.ShopCategory.GPU, GPUSlotList);
+    }
+    private void OnButtonDeco()
+    {
+        CPUPage.SetActive(false);
+        GPUPage.SetActive(false);
+        DECOPage.SetActive(true);
+        SKILLPage.SetActive(false);
+
+        RefreshData(ShopList.ShopCategory.DECO, DECOSlotList);
+    }
+    private void OnButtonSkill()
+    {
+        CPUPage.SetActive(false);
+        GPUPage.SetActive(false);
+        DECOPage.SetActive(false);
+        SKILLPage.SetActive(true);
+
+        RefreshData(ShopList.ShopCategory.SKILL, SKILLSlotList);
     }
 }

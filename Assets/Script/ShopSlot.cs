@@ -79,7 +79,12 @@ public class ShopSlot : MonoBehaviour
             itemNameText.text = "준비중";
             // 가격 설정 로직 추가
         }
+
     }
 
-
+    public void InitSlot(ShopPopup shopPopup, int index)
+    {
+        this.shopPopup = shopPopup;
+        slotIndex = index;
+    }
 }

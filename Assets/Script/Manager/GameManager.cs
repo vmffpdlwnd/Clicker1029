@@ -24,6 +24,7 @@ public enum Save_Date
     save_Gold
 }
 
+[System.Serializable]
 public class PlayerData
 {
     public string userNickName; 
@@ -35,7 +36,7 @@ public class PlayerData
 
 public class GameManager : Singleton<GameManager>
 {
-    float rotation;
+    private ClickerGame table;
 
     private PlayerData pData = new PlayerData();
 
@@ -55,6 +56,13 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake(); // 부모의 Awake 호출
         dataPath = Application.persistentDataPath + "/save";
+
+        #region _TableData_
+        table = Resources.Load<ClickerGame>("ClickerGame"); // 런타임중에 에셋폴더(Resources)에 접근해서 에셋을 동적으로 로딩.
+        // 아이템 테이블 딕셔너리로 정리
+        for (int i=0; i<)
+      
+        #endregion
         CheckData();
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
     }
