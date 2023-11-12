@@ -22,7 +22,6 @@ public enum Save_Date
     save_CPU_level,
     save_Exp, // 경험치
     save_Gold
-    
 }
 
 public class PlayerData
@@ -39,6 +38,8 @@ public class GameManager : Singleton<GameManager>
     float rotation;
 
     private PlayerData pData = new PlayerData();
+
+    public bool isPaused = false;
     public PlayerData PlayerInfo
     {
         get => pData;
@@ -58,6 +59,22 @@ public class GameManager : Singleton<GameManager>
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
     }
 
+    private void Update()
+    {
+        if (Time.time - lastSaveTime >= autoSaveInterval)
+        {
+            Debug.Log("Save Data!");
+            SaveData();
+            lastSaveTime = Time.time;
+        }
+        if (GameManager.Instance.isPaused)
+        {
+            return; // 게임이 일시정지 상태라면 Update를 빠져나감
+        }
+
+        // 게임이 일시정지 상태가 아니라면 정상적으로 Update 실행
+    }
+
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded; // 이벤트에서 메서드 제거
@@ -67,6 +84,7 @@ public class GameManager : Singleton<GameManager>
     {
         SaveData();
         nextScene = newScene;
+        isPaused = true; // 새로운 씬을 로드하는 동안 게임을 일시 정지 상태로 변경
         SceneManager.LoadScene("LoadingScene");
     }
 
@@ -77,6 +95,7 @@ public class GameManager : Singleton<GameManager>
             Debug.Log("캐릭터 세이브 데이터 로딩");
             LoadData();
         }
+        isPaused = false; // 씬 로딩이 완료되면 게임을 일시 정지 상태에서 해제
     }
 
     #region _Save&Load_
@@ -85,15 +104,7 @@ public class GameManager : Singleton<GameManager>
     private float autoSaveInterval = 60f; // 자동 저장 간격 (초 단위)
     private float lastSaveTime = 0f; // 마지막 저장 시간
 
-    private void Update()
-    {
-        if (Time.time - lastSaveTime >= autoSaveInterval)
-        {
-            Debug.Log("Save Data!");
-            SaveData();
-            lastSaveTime = Time.time;
-        }
-    }
+  
 
     public void SaveData()
     {
@@ -156,6 +167,7 @@ public class GameManager : Singleton<GameManager>
     public int PlayerCurrentCPU_level
     {
         get => pData.CPU_level;
+        set => pData.CPU_level = value;
     }
 
     public Text expText;

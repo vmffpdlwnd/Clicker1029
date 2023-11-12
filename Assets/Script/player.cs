@@ -39,6 +39,11 @@ public class player : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.isPaused) // 게임이 일시 정지 상태라면 Update를 빠져나감
+        {
+            return;
+        }
+
         if (!isScaling && Input.GetKeyDown(KeyCode.Space) | Input.GetMouseButtonDown(0) && gameObject.layer == LayerMask.NameToLayer("Clickable"))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

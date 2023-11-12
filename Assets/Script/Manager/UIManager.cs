@@ -92,9 +92,7 @@ public class UIManager : Singleton<UIManager>
             // StatePopup UI를 원하는 위치로 이동
             statePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isStatePopupActive = true;
-
-            // 게임 시간 멈추기
-            Time.timeScale = 0;
+            GameManager.Instance.isPaused = true; // 팝업을 열면 게임을 일시 정지 상태로 변경
         }
         else
         {
@@ -102,9 +100,7 @@ public class UIManager : Singleton<UIManager>
             statePopup.transform.DOLocalMove(statePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
             {
                 isStatePopupActive = false;
-
-                // 게임 시간 재개
-                Time.timeScale = 1;
+                GameManager.Instance.isPaused = false;
             });
         }
     }
@@ -117,9 +113,7 @@ public class UIManager : Singleton<UIManager>
             // ShopPopup UI를 원하는 위치로 이동
             shopPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isShopPopupActive = true;
-
-            // 게임 시간 멈추기
-            Time.timeScale = 0;
+            GameManager.Instance.isPaused = true;
         }
         else
         {
@@ -127,9 +121,7 @@ public class UIManager : Singleton<UIManager>
             shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
             {
                 isShopPopupActive = false;
-
-                // 게임 시간 재개
-                Time.timeScale = 0;
+                GameManager.Instance.isPaused = false;
             });
         }
     }
@@ -142,9 +134,7 @@ public class UIManager : Singleton<UIManager>
             // GamePopup UI를 원하는 위치로 이동
             gamePopup.transform.DOLocalMove(new Vector3(0, 0, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isGamePopupActive = true;
-
-            // 게임 시간 멈추기
-            Time.timeScale = 0;
+            GameManager.Instance.isPaused = true;
         }
         else
         {
@@ -152,9 +142,7 @@ public class UIManager : Singleton<UIManager>
             gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
             {     
                 isGamePopupActive = false;
-
-                // 게임 시간 재개
-                Time.timeScale = 1;
+                GameManager.Instance.isPaused = false;
             });
         }
     }
@@ -167,9 +155,7 @@ public class UIManager : Singleton<UIManager>
             // SettingPopup UI를 원하는 위치로 이동
             settingPopup.transform.DOLocalMove(new Vector3(0, -260, 0), 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal);
             isSettingPopupActive = true;
-
-            // 게임 시간 멈추기
-            Time.timeScale = 0;
+            GameManager.Instance.isPaused = true;
         }
         else
         {
@@ -177,9 +163,7 @@ public class UIManager : Singleton<UIManager>
             settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() =>
             { 
                 isSettingPopupActive = false;
-
-                // 게임 시간 재개
-                Time.timeScale = 1;
+                GameManager.Instance.isPaused = false;
             });
     }
     }
@@ -188,18 +172,22 @@ public class UIManager : Singleton<UIManager>
         if (currentPopup != "state" && isStatePopupActive)
         {
             statePopup.transform.DOLocalMove(statePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isStatePopupActive = false);
+            GameManager.Instance.isPaused = false;
         }
         if (currentPopup != "shop" && isShopPopupActive)
         {
             shopPopup.transform.DOLocalMove(shopPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isShopPopupActive = false);
+            GameManager.Instance.isPaused = false;
         }
         if (currentPopup != "game" && isGamePopupActive)
         {
             gamePopup.transform.DOLocalMove(gamePopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isGamePopupActive = false);
+            GameManager.Instance.isPaused = false;
         }
         if (currentPopup != "setting" && isSettingPopupActive)
         {
             settingPopup.transform.DOLocalMove(settingPopupOriginalPosition, 1f).SetEase(Ease.InOutElastic).SetUpdate(UpdateType.Normal).OnComplete(() => isSettingPopupActive = false);
+            GameManager.Instance.isPaused = false;
         }
     }
 }
