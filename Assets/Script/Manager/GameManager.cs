@@ -32,6 +32,8 @@ public class PlayerData
     public int curExp;
     public int gold;
     public int CPU_level;
+
+    public Inventory inventory;
 }
 
 public class GameManager : Singleton<GameManager>
@@ -58,14 +60,28 @@ public class GameManager : Singleton<GameManager>
         dataPath = Application.persistentDataPath + "/save";
 
         #region _TableData_
-        table = Resources.Load<ClickerGame>("ClickerGame"); // 런타임중에 에셋폴더(Resources)에 접근해서 에셋을 동적으로 로딩.
+        ClickerGame table = Resources.Load<ClickerGame>("ClickerGame"); // 런타임중에 에셋폴더(Resources)에 접근해서 에셋을 동적으로 로딩.
         // 아이템 테이블 딕셔너리로 정리
-        for (int i=0; i<)
-      
+        for (int i = 0; i < table.sheets[0].list.Count; i++)
+        {
+            shopTable.Add(table.sheets[0].list[i].uid, table.sheets[0].list[i]);
+        }
+
+
         #endregion
         CheckData();
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
     }
+    #region _TableData_
+    // 랩핑 하수 (보호되어야하는 데이터를 읽기 전용으로만 리턴.
+    public bool GetItemData(int itemID, out object data)
+    {
+        return shopTable.TryGetValue(itemID, out data);
+    }
+
+   public Dictionary<int, object> shopTable = new Dictionary<int, object>();
+
+    #endregion
 
     private void Update()
     {
@@ -156,6 +172,7 @@ public class GameManager : Singleton<GameManager>
         pData.level = 1;
         pData.CPU_level = 1;
 
+        pData.inventory = new Inventory();
     }
 
     public string PlayerName
@@ -198,6 +215,25 @@ public class GameManager : Singleton<GameManager>
         pData.gold += addGold * pData.level;
         UIManager.Instance.UpdateUI();
     }
+
+    #endregion
+
+    #region _Inventory_
+
+    public bool LootingItem(InventoryItemData newItem)
+    {
+        if (!pData.inventory.isFull())
+        {
+            pData.inventory.AddItem(newItem);
+
+            Debug.Log("아이템 습득 " + newItem.itemTableID + " 인벤토리 내 아이템 갯수는 " + pData.inventory.CurSlot);
+            return true;
+        }
+        return false;
+    }
+
+    public Inventory INVEN { get => pData.inventory; }
+
 
     #endregion
 }
