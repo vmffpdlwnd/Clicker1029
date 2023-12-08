@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
-using Unity.VisualScripting;
 
 public enum SceneName
 {
@@ -38,8 +37,6 @@ public class PlayerData
 public class GameManager : Singleton<GameManager>
 {
     private ClickerGame table;
-    // 추가: 아이템 테이블을 딕셔너리로 정리
-    private Dictionary<int, ClickerGame.Param> itemTable = new Dictionary<int, ClickerGame.Param>();
 
     private PlayerData pData = new PlayerData();
 
@@ -62,27 +59,13 @@ public class GameManager : Singleton<GameManager>
 
         #region _TableData_
         table = Resources.Load<ClickerGame>("ClickerGame"); // 런타임중에 에셋폴더(Resources)에 접근해서 에셋을 동적으로 로딩.
-
         // 아이템 테이블 딕셔너리로 정리
-        for (int i = 0; i < table.sheets[0].list.Count; i++) // 첫 번째 시트의 리스트를 사용
-        {
-            itemTable.Add(table.sheets[0].list[i].uid, table.sheets[0].list[i]);
-        }
-
-
+        for (int i=0; i<)
+      
         #endregion
         CheckData();
         SceneManager.sceneLoaded += OnSceneLoaded; // 이벤트에 메서드 등록
     }
-
-    #region _TableData_
-    public bool GetItemData(int itemID, out ClickerGame.Param data)
-    {
-        return itemTable.TryGetValue(itemID, out data);
-    }
-    #endregion
-
-    //GetItemData
 
     private void Update()
     {
