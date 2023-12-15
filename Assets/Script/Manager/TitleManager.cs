@@ -19,6 +19,7 @@ public class TitleManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.SetResolution(1080, 1920, true);
         nickNamePopup.SetActive(false); // 팝업을 비활성화
         warningText.gameObject.SetActive(false); // warningText를 비활성화
         InitTitleScene();
