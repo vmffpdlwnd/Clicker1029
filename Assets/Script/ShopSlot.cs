@@ -87,8 +87,6 @@ public class ShopSlot : MonoBehaviour
             // 아이템의 정보를 얻지 못했습니다.
             // 이 경우에 적절한 에러 처리를 수행하시면 됩니다.
         }
-
-
     }
 
     public void ClearSlot()
@@ -103,11 +101,9 @@ public class ShopSlot : MonoBehaviour
         curCount = 0;
     }
 
-
     public void InitSlot(ShopPopup shopPopup, int index)
     {
         this.shopPopup = shopPopup;
         slotIndex = index;
-
     }
 }

@@ -1,143 +1,136 @@
-using System;
-using System.Collections;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using DG.Tweening;
 
 public class ShopPopup : Popup_Base, IBaseTownPopup
 {
-    [SerializeField]
-    private Button CPUBtn;
-    [SerializeField]
-    private Button GPUBtn;
-    [SerializeField]
-    private Button DECOBtn;
-    [SerializeField]
-    private Button SKILLBtn;
+    [Header("Buttons")]
+    [SerializeField] private Button CPUBtn;
+    [SerializeField] private Button GPUBtn;
+    [SerializeField] private Button DECOBtn;
+    [SerializeField] private Button SKILLBtn;
 
-    [SerializeField]
-    private GameObject shopSlotPrefab;
-    [SerializeField]
-    private RectTransform CPURect; // 슬록등을 만들어낼 컨텐츠 영역
-    [SerializeField]
-    private RectTransform GPURect; // 판매리스트를 생성할 영역
-    [SerializeField]
-    private RectTransform DECORect; // 슬록등을 만들어낼 컨텐츠 영역
-    [SerializeField]
-    private RectTransform SKILLRect; // 판매리스트를 생성할 영역
+    [Header("Shop Slots")]
+    [SerializeField] private GameObject shopSlotPrefab;
+    [SerializeField] private RectTransform CPURect;
+    [SerializeField] private RectTransform GPURect;
+    [SerializeField] private RectTransform DECORect;
+    [SerializeField] private RectTransform SKILLRect;
 
-    private ShopSlot shopSlot;
-    private Inventory inventory;
+    [Header("Pages")]
+    [SerializeField] private GameObject CPUPage;
+    [SerializeField] private GameObject GPUPage;
+    [SerializeField] private GameObject DECOPage;
+    [SerializeField] private GameObject SKILLPage;
 
-    List<ShopSlot> CPUSlotList = new List<ShopSlot>();
-    List<ShopSlot> GPUSlotList = new List<ShopSlot>();
-    List<ShopSlot> DECOSlotList = new List<ShopSlot>();
-    List<ShopSlot> SKILLSlotList = new List<ShopSlot>();
-    List<InventoryItemData> dataList;
+    private List<List<ShopSlot>> shopSlotLists = new List<List<ShopSlot>>();
 
-    [SerializeField]
-    private GameObject CPUPage;
-    [SerializeField]
-    private GameObject GPUPage;
-    [SerializeField]
-    private GameObject DECOPage;
-    [SerializeField]
-    private GameObject SKILLPage;
+    private ShopSlot shopSlot; // ShopSlot 변수 추가
 
     private void Awake()
     {
         InitPopup();
-        OnButtonCpu();
-        OnButtonGpu();
-        OnButtonSkill();
-        OnButtonDeco();
-        PopupClose();
+        SetButtonListeners();
     }
 
     private void InitPopup()
     {
+        // Initialize shop slot lists
+        shopSlotLists.Add(new List<ShopSlot>());
+        shopSlotLists.Add(new List<ShopSlot>());
+        shopSlotLists.Add(new List<ShopSlot>());
+        shopSlotLists.Add(new List<ShopSlot>());
 
-        for (int i = 0; i < 5; i++) // Pentium Silver, Pentium Gold, i3, I5, I7
+        // Create shop slots
+        CreateShopSlots(5, CPURect, shopSlotLists[0]);
+        CreateShopSlots(1, GPURect, shopSlotLists[1]);
+        CreateShopSlots(1, DECORect, shopSlotLists[2]);
+        CreateShopSlots(1, SKILLRect, shopSlotLists[3]);
+    }
+
+    private void CreateShopSlots(int count, RectTransform parentRect, List<ShopSlot> slotList)
+    {
+        for (int i = 0; i < count; i++)
         {
-            shopSlot = Instantiate(shopSlotPrefab, CPURect).GetComponent<ShopSlot>();
-            shopSlot.InitSlot(this, i); // 슬롯을 생성한 팝업 정보, 몇번째 슬롯인지 index 전달.
-            shopSlot.gameObject.name = "BuyeSlot_" + i;
+            GameObject newShopSlotObject = Instantiate(shopSlotPrefab, parentRect);
+            shopSlot = newShopSlotObject.GetComponent<ShopSlot>(); // ShopSlot 인스턴스화 및 초기화
+            if (shopSlot != null)
+            {
+                shopSlot.InitSlot(this, i);
+                shopSlot.gameObject.name = "BuySlot_" + i;
+                slotList.Add(shopSlot);
+            }
+            else
+            {
+                Debug.LogError("ShopSlot component not found in the instantiated object.");
+            }
         }
     }
 
-    private void RefreshData()
+    private void SetButtonListeners()
     {
-        // 플레이어 보유금액을 갱신
+        CPUBtn.onClick.AddListener(OnButtonCpu);
+        GPUBtn.onClick.AddListener(OnButtonGpu);
+        DECOBtn.onClick.AddListener(OnButtonDeco);
+        SKILLBtn.onClick.AddListener(OnButtonSkill);
+    }
 
-        // 인벤토리 정보 불러오기
-        inventory = GameManager.Instance.INVEN;
-
-        dataList = inventory.GetItemList(); // 아이템정보 가져오고.
+    private void RefreshData(List<ShopSlot> slotList)
+    {
+        Inventory inventory = GameManager.Instance.INVEN;
 
         for (int i = 0; i < inventory.MaxSlot; i++)
         {
-            if (i < inventory.CurSlot && -1 < inventory.items[i].itemTableID) // 테이블정보가 정상적으로 가지고 있다.
+            if (i < inventory.CurSlot && inventory.items[i].itemTableID != -1)
             {
-                CPUSlotList[i].RefrshSlot(inventory.items[i]); // 슬롯정보를 갱신  
+                if (i < slotList.Count)
+                {
+                    slotList[i].RefrshSlot(inventory.items[i]);
+                }
             }
-            else // 아이템이 없는 경우
+            else
             {
-                CPUSlotList[i].ClearSlot(); // 빈칸 처리
+                if (i < slotList.Count)
+                {
+                    slotList[i].ClearSlot();
+                }
             }
         }
     }
 
     public void OnButtonCpu()
     {
-        RefreshData(); // 목록을 최신화.
-
-        CPUPage.SetActive(true);
-        GPUPage.SetActive(false);
-        DECOPage.SetActive(false);
-        SKILLPage.SetActive(false);
-
-        CPUPage.SetActive(true);
-        GPUPage.SetActive(false);
-        SKILLPage.SetActive(false);
+        RefreshData(shopSlotLists[0]);
+        SetActivePage(CPUPage);
     }
+
     public void OnButtonGpu()
     {
-        RefreshData(); // 목록을 최신화.
-
-        CPUPage.SetActive(false);
-        GPUPage.SetActive(true);
-        DECOPage.SetActive(false);
-        SKILLPage.SetActive(false);
+        RefreshData(shopSlotLists[1]);
+        SetActivePage(GPUPage);
     }
+
     public void OnButtonDeco()
     {
-        RefreshData(); // 목록을 최신화.
-
-        CPUPage.SetActive(false);
-        GPUPage.SetActive(false);
-        DECOPage.SetActive(true);
-        SKILLPage.SetActive(false);
+        RefreshData(shopSlotLists[2]);
+        SetActivePage(DECOPage);
     }
+
     public void OnButtonSkill()
     {
-        RefreshData(); // 목록을 최신화.
+        RefreshData(shopSlotLists[3]);
+        SetActivePage(SKILLPage);
+    }
 
+    private void SetActivePage(GameObject page)
+    {
         CPUPage.SetActive(false);
         GPUPage.SetActive(false);
         DECOPage.SetActive(false);
-        SKILLPage.SetActive(true);
-    }
+        SKILLPage.SetActive(false);
 
-    public void PopupClose()
-    {
-        transform.DOScale(Vector3.zero, 0.7f).SetEase(Ease.OutElastic);
+        page.SetActive(true);
     }
-
-    public void PopupOpen()
-    {
-        RefreshData(); // 팝업창 정보 갱신.
-        transform.DOScale(Vector3.one, 0.7f).SetEase(Ease.OutElastic);
-    }
+   
 }

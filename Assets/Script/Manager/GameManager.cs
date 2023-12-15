@@ -38,8 +38,7 @@ public class PlayerData
 
 public class GameManager : Singleton<GameManager>
 {
-    private ClickerGame table;
-
+   
     private PlayerData pData = new PlayerData();
 
     public bool isPaused = false;
@@ -233,7 +232,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     public Inventory INVEN { get => pData.inventory; }
-
 
     #endregion
 }

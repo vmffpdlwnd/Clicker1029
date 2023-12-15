@@ -1,9 +1,10 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatePopup : MonoBehaviour
+public class StatePopup : Popup_Base, IBaseTownPopup
 {
     [SerializeField] private Button CPU;
     [SerializeField] private Button GPU;
@@ -12,9 +13,9 @@ public class StatePopup : MonoBehaviour
     [SerializeField]
     private ShopSlot shopSlot;
 
-    List<ShopSlot> CPUSlotList = new List<ShopSlot>();
-    List<ShopSlot> GPUSlotList = new List<ShopSlot>();
-    List<ShopSlot> SKILLSlotList = new List<ShopSlot>();
+    private List<ShopSlot> CPUSlotList = new List<ShopSlot>();
+    private List<ShopSlot> GPUSlotList = new List<ShopSlot>();
+    private List<ShopSlot> SKILLSlotList = new List<ShopSlot>();
 
     [SerializeField]
     private GameObject CPUPage;
@@ -23,9 +24,7 @@ public class StatePopup : MonoBehaviour
     [SerializeField]
     private GameObject SKILLPage;
 
-    // ClickerGame 객체를 참조할 필드를 추가합니다.
-    [SerializeField]
-    private ClickerGame clickerGame;
+    private ClickerGame clickerGame; // ClickerGame 객체를 참조할 필드
 
     private void Start()
     {
@@ -33,17 +32,14 @@ public class StatePopup : MonoBehaviour
         CPU.onClick.AddListener(OnButtonCpu);
         GPU.onClick.AddListener(OnButtonGpu);
         SKILL.onClick.AddListener(OnButtonSkill);
-    }
 
-    private void Awake()
-    {
-        clickerGame = FindObjectOfType<ClickerGame>();
+        // ClickerGame 객체를 찾아서 할당합니다.
+        clickerGame = Resources.Load<ClickerGame>("ClickerGameData");
         if (clickerGame == null)
         {
             Debug.LogError("ClickerGame object not found!");
         }
     }
-
 
     private void RefreshData(int categoryIndex, List<ShopSlot> slotList)
     {
@@ -56,7 +52,7 @@ public class StatePopup : MonoBehaviour
                 // 아이템의 정보를 이용해서 InventoryItemData 객체를 생성합니다.
                 InventoryItemData itemData = new InventoryItemData();
                 itemData.itemTableID = items[i].uid;
-                // 생성한 객체를 RefrshSlot 메소드에 전달합니다.
+                // 생성한 객체를 RefreshSlot 메소드에 전달합니다.
                 slotList[i].RefrshSlot(itemData);
             }
             else

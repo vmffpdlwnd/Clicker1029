@@ -18,9 +18,9 @@ public class ClickerGame_importer : AssetPostprocessor {
 			if (!filePath.Equals (asset))
 				continue;
 				
-			ClickerGame data = (ClickerGame)AssetDatabase.LoadAssetAtPath (exportPath, typeof(ClickerGame));
+			Entity_Shop data = (Entity_Shop)AssetDatabase.LoadAssetAtPath (exportPath, typeof(Entity_Shop));
 			if (data == null) {
-				data = ScriptableObject.CreateInstance<ClickerGame> ();
+				data = ScriptableObject.CreateInstance<Entity_Shop> ();
 				AssetDatabase.CreateAsset ((ScriptableObject)data, exportPath);
 				data.hideFlags = HideFlags.NotEditable;
 			}
@@ -41,19 +41,20 @@ public class ClickerGame_importer : AssetPostprocessor {
 						continue;
 					}
 
-					ClickerGame.Sheet s = new ClickerGame.Sheet ();
+					Entity_Shop.Sheet s = new Entity_Shop.Sheet ();
 					s.name = sheetName;
 				
 					for (int i=1; i<= sheet.LastRowNum; i++) {
 						IRow row = sheet.GetRow (i);
 						ICell cell = null;
 						
-						ClickerGame.Param p = new ClickerGame.Param ();
+						Entity_Shop.Param p = new Entity_Shop.Param ();
 						
-					cell = row.GetCell(0); p.uid = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(0); p.uid = (cell == null ? 0.0 : cell.NumericCellValue);
 					cell = row.GetCell(1); p.Name = (cell == null ? "" : cell.StringCellValue);
-					cell = row.GetCell(2); p.Level = (int)(cell == null ? 0 : cell.NumericCellValue);
-					cell = row.GetCell(4); p.Gold = (int)(cell == null ? 0 : cell.NumericCellValue);
+					cell = row.GetCell(2); p.Level = (cell == null ? 0.0 : cell.NumericCellValue);
+					cell = row.GetCell(3); p.iconImg = (cell == null ? "" : cell.StringCellValue);
+					cell = row.GetCell(4); p.Gold = (cell == null ? 0.0 : cell.NumericCellValue);
 						s.list.Add (p);
 					}
 					data.sheets.Add(s);

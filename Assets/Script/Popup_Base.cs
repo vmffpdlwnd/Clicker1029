@@ -13,11 +13,12 @@ public interface IBaseTownPopup
 
 public class Popup_Base : MonoBehaviour
 {
-
-
-    private void Awake()
+    public void PopupOpen()
     {
-        gameObject.transform.DOScale(Vector3.zero, 0.01f); // 게임 사작하면 기본적으로 팝업은 닫힌상태로 시작
+        transform.DOScale(Vector3.one, 0.7f).SetEase(Ease.OutElastic);
     }
-
+    public void PopupClose()
+    {
+        transform.DOScale(Vector3.zero, 0.7f).SetEase(Ease.OutElastic);
+    }
 }
