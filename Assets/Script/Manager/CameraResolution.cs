@@ -13,7 +13,7 @@ public class CameraResolution : MonoBehaviour
 
         if (currentSceneName == "GameScene1")
         {
-            float scale_Height = ((float)Screen.width / Screen.height) / ((float)16f / 10f);
+            float scale_Height = ((float)Screen.width / Screen.height) / ((float)16f / 9f);
             float scale_Width = 1f / scale_Height;
 
             if (scale_Height < 1)

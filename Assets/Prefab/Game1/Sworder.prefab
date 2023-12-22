@@ -363,7 +363,7 @@ Transform:
   - {fileID: 2196301818364836670}
   m_Father: {fileID: 2971527337960955894}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3.8641229, y: -1.7052398, z: 160.88678}
 --- !u!1 &161565300390835903
 GameObject:
   m_ObjectHideFlags: 0
@@ -5789,7 +5789,7 @@ GameObject:
   - component: {fileID: 4185243068508982162}
   m_Layer: 0
   m_Name: Sworder
-  m_TagString: Untagged
+  m_TagString: P_NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5801,7 +5801,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3321296851951010616}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -1.7566338, y: -7.5600004, z: -4.7041}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
   m_ConstrainProportionsScale: 0
@@ -5881,7 +5881,7 @@ Animator:
   m_GameObject: {fileID: 3321296851951010616}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f5a5df21e2ce72749aab436d5667e57b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -5906,7 +5906,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &4185243068508982162
 BoxCollider:
